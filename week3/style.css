@@ -17,7 +17,7 @@
 
 .profile {
     display: flex;
-    align-items: top;
+    /* align-items: top; */
     gap: 15px;
     justify-content: flex-start;
 }
