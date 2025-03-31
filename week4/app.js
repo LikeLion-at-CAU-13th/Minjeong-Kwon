@@ -17,6 +17,8 @@ const comScore = document.getElementsByClassName("computer-score")[0];
 let myScoreCount = 0;
 let comScoreCount = 0;
 
+const resetBtn = document.getElementById("reset-button");
+
 //2. 이벤트 설정
 rockBtn.addEventListener("click", displayMyChoice); //click 했을때 displayMyChoice가 실행되도록!
 scissorsBtn.addEventListener("click", displayMyChoice);
@@ -95,5 +97,20 @@ function start(myChoice) {
     myScore.innerText = myScoreCount;
     comScore.innerText = comScoreCount;
 }
+
+//7. 리셋 버튼 누르면 초기화 이벤트 설정
+resetBtn.addEventListener("click", displayReset);
+
+//8. displayReset 함수 작성
+function displayReset (start) {
+    myScoreCount = 0;
+    comScoreCount = 0;
+    
+    //리셋된 점수판
+    myScore.innerText = myScoreCount;
+    comScore.innerText = comScoreCount;
+}
+
+
 
 
