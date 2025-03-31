@@ -11,6 +11,12 @@ const paperBtn = document.getElementById("paper");
 
 const result = document.getElementById("display-result");
 
+const myScore = document.getElementsByClassName("my-score")[0];
+const comScore = document.getElementsByClassName("computer-score")[0];
+
+let myScoreCount = 0;
+let comScoreCount = 0;
+
 //2. 이벤트 설정
 rockBtn.addEventListener("click", displayMyChoice); //click 했을때 displayMyChoice가 실행되도록!
 scissorsBtn.addEventListener("click", displayMyChoice);
@@ -57,8 +63,10 @@ function start(myChoice) {
         result.innerText = 'draw';
     } else if (myChoice == 'rock' && comChoice == 'scissors') {
         result.innerText = 'win';
+        myScoreCount++;
     } else if (myChoice == 'rock' && comChoice == 'paper'){
         result.innerText = 'lose';
+        comScoreCount++;
     }
 
     // 사용자(myChoice)가 scissors인 경우
@@ -66,8 +74,10 @@ function start(myChoice) {
         result.innerText = 'draw';
     } else if (myChoice == 'scissors' && comChoice == 'paper') {
         result.innerText = 'win';
+        myScoreCount++;
     } else if (myChoice == 'scissors' && comChoice == 'rock'){
         result.innerText = 'lose';
+        comScoreCount++;
     }
 
     // 사용자(myChoice)가 paper인 경우
@@ -75,9 +85,15 @@ function start(myChoice) {
         result.innerText = 'draw';
     } else if (myChoice == 'paper' && comChoice == 'rock') {
         result.innerText = 'win';
+        myScoreCount++;
     } else if (myChoice == 'paper' && comChoice == 'scissors'){
         result.innerText = 'lose';
+        comScoreCount++;
     }
+
+    //점수판
+    myScore.innerText = myScoreCount;
+    comScore.innerText = comScoreCount;
 }
 
 
