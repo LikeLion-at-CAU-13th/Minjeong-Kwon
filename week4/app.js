@@ -18,6 +18,7 @@ let myScoreCount = 0;
 let comScoreCount = 0;
 
 const resetBtn = document.getElementById("reset-button");
+const darkmodeBtn = document.getElementById("darkmode-button");
 
 //2. 이벤트 설정
 rockBtn.addEventListener("click", displayMyChoice); //click 했을때 displayMyChoice가 실행되도록!
@@ -111,6 +112,20 @@ function displayReset (start) {
     comScore.innerText = comScoreCount;
 }
 
+//9. 다크 모드 구현하기 (우선 버튼 만들고 흑백 전환 ..)
+darkmodeBtn.addEventListener("click", darkMode);
+
+//10. darkMode 함수 작성
+function darkMode() {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+        darkmodeBtn.innerText = "☀️";
+    } else {
+        darkmodeBtn.innerText = "🌙";
+    }
+
+}
 
 
 

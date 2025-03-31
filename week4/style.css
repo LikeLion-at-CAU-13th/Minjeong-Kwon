@@ -1,5 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap");
 
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+.dark-mode .fa-regular {
+  border-color: white;
+}
+
+.dark-mode .contents {
+  border-color: white;
+}
+
+.dark-mode #darkmode-button {
+  background-color: white;
+}
+
+#darkmode-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -153,3 +183,4 @@ button {
 .title {
   border-bottom: black solid 3px;
 }
+
