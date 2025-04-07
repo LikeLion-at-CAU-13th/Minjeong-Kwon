@@ -1,5 +1,7 @@
 import Todo from "../DOM/Todo.js";
-import CompleteController from "./CompleteController.js";
+import Complete from "../DOM/Complete.js";
+import CompleteController from "../controller/CompleteController.js";
+
 
 class TodoController {
     constructor(todoText){
@@ -33,17 +35,24 @@ class TodoController {
         todoList.removeChild(this.newTodo.getRow()); //인자 안에 들어간 자식 태그를 삭제 (row 한 줄 삭제)
     }
     doneTodo() {
-        this.innerNode.classList.toggle('done-text');
-        this.comBtnNode.classList.toggle('done-btn'); 
+        // this.innerNode.classList.toggle('done-text');
+        // this.comBtnNode.classList.toggle('done-btn'); 
 
-        if(this.comBtnNode.innerText === '미완'){
-            this.comBtnNode.innerText ='완료';
-        } else {
-            this.comBtnNode.innerText = '미완';
-        }
+        // if(this.comBtnNode.innerText === '미완'){
+        //     this.comBtnNode.innerText ='완료';
+        // } else {
+        //     this.comBtnNode.innerText = '미완';
+        // }
 
-        const completeController = new CompleteController(this.newTodo);  
-        completeController.addToCompleteList(); // complete-list에 옮기기
+        // ✅ 완료되면 complete 객체 생성 후 이동!
+        const text = this.innerNode.innerText;
+        const complete = new Complete(text);
+        const completeController = new CompleteController(complete);
+        completeController.addToCompleteList();
+
+        // ✅ 기존 to-do-list에서 항목 제거
+        const todoList = document.getElementById('to-do-list');
+        todoList.removeChild(this.newTodo.getRow());
     }
 }
 
