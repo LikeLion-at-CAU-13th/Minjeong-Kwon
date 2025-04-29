@@ -12,7 +12,7 @@ const option = {
 
   const container = document.getElementById('container');
 
-  let imgCount = 1;
+  let photoCount = 1;
 
   async function getData() {
       let count = Math.floor(Math.random() * 1000) + 1;; //데이터를 랜덤으로 뽑아오기
@@ -36,7 +36,7 @@ const option = {
 
         const info = document.createElement('span');
         info.innerText = `
-        ${imgCount++}번째 사진
+        ${photoCount++}번째 사진
         🏷️ 제목 : ${data.galTitle};
         🖼️ 장소 : ${data.galPhotographyLocation};
         `
@@ -49,16 +49,21 @@ const option = {
         const button = document.createElement('button');
         button.innerText = "더보기";
         list.appendChild(button);
-
+        
+        //더보기 버튼 누르면
         button.addEventListener('click', () => {
-         // 정보 전달은 보통 query string 또는 localStorage로
-         const query = new URLSearchParams({
-           title: data.galTitle,
-           location: data.galPhotographyLocation,
-           imageUrl: data.galWebImageUrl,
-         }).toString();
-         window.location.href = `detail.html?${query}`;
-       });
+          const detailData = {
+            //가져올 데이터들
+            title: data.galTitle,
+            location: data.galPhotographyLocation,
+            imageUrl: data.galWebImageUrl,
+            month: data.galPhotographyMonth,
+            photographer: data.galPhotographer,
+            keyword: data.galSearchKeyword,
+          };
+          localStorage.setItem("photoDetail", JSON.stringify(detailData));
+          window.location.href = "detail.html";
+        });
    
      })  
 

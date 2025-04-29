@@ -27,3 +27,14 @@ button {
 button:hover {
   background-color: wheat;
 }
+
+.more-button {
+  all: unset;
+  margin: 10px 0;
+  background-color: rosybrown;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+}
