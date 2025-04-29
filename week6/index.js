@@ -11,10 +11,12 @@ const option = {
   };
 
   const container = document.getElementById('container');
-  let count = 30;
+
+  let imgCount = 1;
 
   async function getData() {
-     const url = `${baseURL}/galleryList1?numOfRows=${option.numofRows}&MobileApp=${option.MobileApp}&MobileOS=${option.MobileOS}&arrange=${option.arrange}&_type=${option._type}&pageNo=${count}&serviceKey=${option.serviceKey}`;
+      let count = Math.floor(Math.random() * 1000) + 1;; //데이터를 랜덤으로 뽑아오기
+      const url = `${baseURL}/galleryList1?numOfRows=${option.numofRows}&MobileApp=${option.MobileApp}&MobileOS=${option.MobileOS}&arrange=${option.arrange}&_type=${option._type}&pageNo=${count}&serviceKey=${option.serviceKey}`;
 
      const fetchData = await fetch(url);
     //  console.log(fetchData);
@@ -34,7 +36,7 @@ const option = {
 
         const info = document.createElement('span');
         info.innerText = `
-        ${i+1}번째 사진
+        ${imgCount++}번째 사진
         🏷️ 제목 : ${data.galTitle};
         🖼️ 장소 : ${data.galPhotographyLocation};
         `
@@ -47,7 +49,19 @@ const option = {
         const button = document.createElement('button');
         button.innerText = "더보기";
         list.appendChild(button);
+
+        button.addEventListener('click', () => {
+         // 정보 전달은 보통 query string 또는 localStorage로
+         const query = new URLSearchParams({
+           title: data.galTitle,
+           location: data.galPhotographyLocation,
+           imageUrl: data.galWebImageUrl,
+         }).toString();
+         window.location.href = `detail.html?${query}`;
+       });
+   
      })  
+
   }
 
   
