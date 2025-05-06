@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더보기</title>
+    <link rel = "stylesheet" href="global.css">
+</head>
+<body>
+    <h1>📸 사진 정보</h1>
+    <div id="detail">
+        <!-- 아까 로컬저장소에 저장해둔 데이터 불러올 공간 -->
+    </div>
+
+    <script>
+        const data = JSON.parse(localStorage.getItem("photoDetail"));
+    
+        if (data) {
+          document.getElementById("detail").innerHTML = `
+            <img src="${data.imageUrl}" width="400"/><br/>
+            <h2>${data.title}</h2>
+            <p>📅 촬영일: ${data.month}</p>
+            <p>📍 장소: ${data.location}</p>
+            <p>📸 촬영자: ${data.photographer}</p>
+            <p>🏷️ 키워드: ${data.keyword}</p>
+          `;
+        } else {
+          document.getElementById("detail").innerText = "사진 정보가 없습니다.";
+        }
+      </script>
+</body>
+</html>
