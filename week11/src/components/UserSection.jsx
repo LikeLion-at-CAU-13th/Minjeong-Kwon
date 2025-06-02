@@ -4,12 +4,20 @@ import UserCard from './UserCard';
 import PageSelection from './PageSelection';
 
 const UserSection = ({filter, userData, curPage, setUserData, setCurPage}) => {
+  const offset = (curPage - 1) * 5;
+  const pageData = userData.slice(offset, offset + 5);
+
     return (
         <UserSecLayout>
             <UserCardBox>
-                { userData.map((data, idx) => <UserCard key={idx} data={data} />)}
+                { pageData.map((data, idx) => <UserCard key={idx} data={data} />)}
             </UserCardBox>
-            {filter === "all" && <PageSelection curPage={curPage} setCurPage={setCurPage} setUserData={setUserData}/>}
+            <PageSelection 
+                curPage={curPage} 
+                setCurPage={setCurPage} 
+                setUserData={setUserData} 
+                userData={userData}
+              />
         </UserSecLayout>
     );
 };

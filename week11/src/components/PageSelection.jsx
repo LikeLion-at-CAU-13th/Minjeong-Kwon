@@ -1,26 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getPerPage } from '../apis/userlist';
 
-const PageSelection = ({curPage, setCurPage, setUserData}) => {
-    const handleClick = async(page) => {
-        const response = await getPerPage(page);
-        setUserData(response);
-        setCurPage(page);
-    }
+const PageSelection = ({curPage, setCurPage, setUserData, userData}) => {
+    const totalPages = Math.ceil(userData.length / 5);
+
     return (
         <SelectionLayout>
-            {[1,2,3,4,5,6].map((val) => 
-                <PageBox
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((val) => (
+                <PageBox 
                 key={val}
-                $active = {val === curPage ? true:false}
-                onClick={() => handleClick(val)}>
+                $active={val === curPage}
+                onClick={() => setCurPage(val)}>
                     {val}
                 </PageBox>
-            )}
+                ))}
         </SelectionLayout>
     );
-};
+}
 
 export default PageSelection;
 

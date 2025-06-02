@@ -1,27 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { filterType } from '../constants/filterType';
-import { getGenderUser, getPartUser, getPerPage } from '../apis/userlist';
+import { getAllUsers, getGenderUser, getPartUser } from '../apis/userlist';
 
 const UserFilter = ({filter, setFilter, setUserData, setCurPage}) => {
     const handleClick = async(type, param) => {
+        let allUsersData = [];
+
         if(type === "all"){
-            const response = await getPerPage(1);
+            const response = await getAllUsers();
             console.log(response);
-            setUserData(response);
-            setCurPage(1);
+            allUsersData = response; 
         } else if (type === "gender"){
             const response = await getGenderUser(param);
             console.log(response);
-            setUserData(response);
-            setCurPage(1);
+            allUsersData = response; 
         } else if (type === "part") {
             const response = await getPartUser(param);
             console.log(response);
-            setUserData(response);
-            setCurPage(1);
+            allUsersData = response;
           }          
         setFilter(param);
+        setUserData(allUsersData);
+        setCurPage(1);      
     }
 
     return (
