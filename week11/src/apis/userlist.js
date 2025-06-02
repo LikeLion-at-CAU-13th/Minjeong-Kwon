@@ -12,3 +12,8 @@ export const getGenderUser = async(gender) => {
     const response = await axios.get(`${baseURL}/lionlist?gender=${gender}`);
     return response.data;
 }
+
+export const getPartUser = async(part) => {
+    const response = await axios.get(`${baseURL}/lionlist?part=${part}`);
+    return response.data;
+}
