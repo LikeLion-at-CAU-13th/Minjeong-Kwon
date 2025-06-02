@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { filterType } from '../constants/filterType';
 import { getGenderUser, getPartUser, getPerPage } from '../apis/userlist';
 
-const UserFilter = ({setFilter, setUserData, setCurPage}) => {
+const UserFilter = ({filter, setFilter, setUserData, setCurPage}) => {
     const handleClick = async(type, param) => {
         if(type === "all"){
             const response = await getPerPage(1);
@@ -23,18 +23,23 @@ const UserFilter = ({setFilter, setUserData, setCurPage}) => {
           }          
         setFilter(param);
     }
+
     return (
         <FilterLayout>
             {filterType.map((data, idx) =>
-                <FilterBox key = {idx} onClick = {() => handleClick(data.type, data.param)}>
+            
+                <FilterBox key = {idx} 
+                onClick = {() => handleClick(data.type, data.param)}
+                $active={filter === data.param}>
                     {data.title}
                 </FilterBox>
             )}
             
         </FilterLayout>
+
+        
     );
 };
-
 export default UserFilter;
 
 
@@ -55,7 +60,8 @@ const FilterLayout = styled.div`
 const FilterBox = styled.div`
     display: flex;
     padding: 1rem 4rem 1rem 4rem;
-    background-color: "#C9C9C9";
+    /* background-color: #C9C9C9; */
+    color: ${(props) => props.$active ? "#FF7710" : "#000000"};
     border-radius: 1rem;
     font-size: 3rem;
     white-space: nowrap;
