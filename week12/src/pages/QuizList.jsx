@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { getQuizList, checkAnswer } from '../Api.js';
+import { getQuizList } from '../Api.js';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { submitAnswer } from '../Api.js';
 
 
 const QuizList = () => {
     const [quizList, setQuizList] = useState([]); //퀴즈 리스트 불러올때
     const [answers, setAnswers] = useState({}); // 선택한 답 저장
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchQuiz() {
@@ -24,13 +27,17 @@ const QuizList = () => {
     }
 
     const handleSubmit = async () => {
-        let correct = 0;
-        for (const quiz of quizList) {
-            const selectedAnswer = answers[quiz.id];
-            if (!selectedAnswer) continue;
-            const isCorrect = await checkAnswer(quiz.id, selectedAnswer);
-            if (isCorrect) correct++;
+        if (Object.keys(answers).length !== 5) {
+        alert("모든 문제에 답을 선택해 주세요.");
+        return;
         }
+
+        const result = await submitAnswer(answers);
+        const correct = result.results.filter(r => r.correct).length;
+
+        navigate ('/result', {
+            state: {total: quizList.length, correct}
+        })
     }
 
   return (
