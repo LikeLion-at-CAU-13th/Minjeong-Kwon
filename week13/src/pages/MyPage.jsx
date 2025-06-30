@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Button, Title, Wrapper } from '../components/home/common'
 import { useRecoilValue, useResetRecoilState } from 'recoil'
-import { emailAtom, isSumittedAtom, UserNameAtom } from '../recoil/atom'
+import { dateAtom, emailAtom, isSumittedAtom, UserNameAtom } from '../recoil/atom'
 import { ThemeColorContext } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,11 +13,13 @@ const MyPage = () => {
     const resetUserName = useResetRecoilState(UserNameAtom);
     const resetEmail = useResetRecoilState(emailAtom);
     const resetIsSubmitted = useResetRecoilState(isSumittedAtom);
+    const resetDate = useResetRecoilState(dateAtom);
 
     const handleReset = () => {
         resetUserName();
         resetEmail();
         resetIsSubmitted();
+        resetDate();
         navigate("/");
     }
 

@@ -20,6 +20,7 @@ const FormSection = () => {
     <Wrapper>
         <Form type='home' inputType='이름'/>
         <Form type='email' inputType='이메일'/>
+        <Form type='date' inputType='날짜'/>
         <Button mode={mode.button} onClick={handleBtn}>
             제출
         </Button>
