@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { getMyPage } from '../apis/user';
+import { getMyPage, login } from '../apis/user';
+import { useNavigate } from 'react-router-dom';
 
 const Mypage = () => {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         //로그인 시 저장해둔 accessToken을 꺼내서 getMyPage로 API 요청
@@ -15,16 +17,31 @@ const Mypage = () => {
         })
         .catch((error) => {
             alert("토큰 기한 만료");
+            navigate("/");
         })
     }, []);
 
     if (loading) return <div>로딩중입니다...!</div>
+
+    const onClick = async () => {
+            try {
+                localStorage.removeItem("access");
+                localStorage.removeItem("refresh");
+                alert("로그아웃 되었습니다!");
+                navigate("/");
+            } catch (error) {
+                alert("뭔가 잘못됨..");
+            }
+        }
 
   return (
     <Wrapper>
         <Title>마이페이지</Title>
         <Info>이름: {data.name}</Info>
         <Info>나이: {data.age}</Info>
+        <BtnWrapper>
+            <button onClick={onClick}>로그아웃</button>
+        </BtnWrapper>
     </Wrapper>
   )
 }
@@ -63,4 +80,32 @@ const Info = styled.div`
     font-family: SUITE;
     margin-bottom: 5px;
     color: #585858;
+`;
+
+const BtnWrapper = styled.div`
+  height: 100%;
+  width: 85%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1.5rem;
+  button {
+    font-weight: 800;
+    background-color: #89cdf6;
+    color: white;
+    padding: 19px;
+    border-radius: 10px;
+    border: none;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 3px 3px skyblue;
+      color: black;
+      background-color: white;
+    }
+  }
 `;
