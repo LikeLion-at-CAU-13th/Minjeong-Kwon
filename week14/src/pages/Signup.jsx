@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { signUp } from '../apis/user';
 import styled from 'styled-components';
+import { useForm } from '../hooks/useForm';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -17,35 +18,36 @@ const Signup = () => {
         
     }
 
-    const [id, setId] = useState();
-    const [pw, setPw] = useState();
-    const [name, setName] = useState();
-    const [age, setAge] = useState();
+    const [id, setId] = useForm();
+    const [pw, setPw] = useForm();
+    const [name, setName] = useForm();
+    const [age, setAge] = useForm();
 
-    const onChangeId = (e) => {
-        setId(e.target.value);
-    }
-    const onChangePw = (e) => {
-        setPw(e.target.value);
-    }
-    const onChangeName = (e) => {
-        setName(e.target.value);
-    }
-    const onChangeAge = (e) => {
-        setAge(e.target.value);
-    }
+    // const onChangeId = (e) => {
+    //     setId(e.target.value);
+    // }
+    // const onChangePw = (e) => {
+    //     setPw(e.target.value);
+    // }
+    // const onChangeName = (e) => {
+    //     setName(e.target.value);
+    // }
+    // const onChangeAge = (e) => {
+    //     setAge(e.target.value);
+    // }
+    
   return (
     <Wrapper>
         <Title>회원가입</Title>
         <Inputs>
             <div>아이디</div>
-            <input value={id} onChange={onChangeId} />
+            <input value={id} onChange={setId} />
             <div>비밀번호</div>
-            <input value={pw} onChange={onChangePw} />
+            <input value={pw} onChange={setPw} />
             <div>이름</div>
-            <input value={name} onChange={onChangeName} />
+            <input value={name} onChange={setName} />
             <div>나이</div>
-            <input value={age} onChange={onChangeAge} />
+            <input value={age} onChange={setAge} />
         </Inputs>
         <button onClick={onClick}>가입하기</button>
     </Wrapper>
