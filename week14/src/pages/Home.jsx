@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from '../hooks/useForm';
 import styled from 'styled-components';
 import { login } from '../apis/user';
@@ -8,6 +8,12 @@ const Home = () => {
     const [id, onChangeId] = useForm();
     const [pw, onChangePw] = useForm();
     const navigate = useNavigate();
+
+    const accessToken = localStorage.getItem("access");
+
+    if (accessToken) {
+        return <Navigate to = '/mypage' />
+    }
 
     const onClick = async () => {
         try {
@@ -19,6 +25,8 @@ const Home = () => {
             alert("id나 pw를 확인하세요");
         }
     }
+
+    
   return (
     <Wrapper>
         <Title>로그인</Title>
