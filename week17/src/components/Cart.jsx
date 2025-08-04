@@ -14,6 +14,7 @@ const Cart = () => {
 	    loading,
 	    getOriginalTotalPrice,
 	    getTotalPrice,
+      toggleAllChecked //과제1 추가
     } = useCartStore();
 
     const [discountCode, setDiscountCode] = useState('');
@@ -46,6 +47,15 @@ const Cart = () => {
         <EmptyMessage>장바구니가 비어있습니다.</EmptyMessage>
       ) : (
         <>
+          {/* 과제1 추가 */}
+          <SelectAllContainer>
+            <input
+              type="checkbox"
+              checked={cartItems.length > 0 && cartItems.every((item) => item.checked)}
+              onChange={() => toggleAllChecked()}
+            />
+            <SelectAllLabel >전체 선택 / 해제</SelectAllLabel>
+          </SelectAllContainer>
           <CartList>
             {cartItems.map((item) => (
               <CartItem key={item.id}>
@@ -237,4 +247,16 @@ const TotalPrice = styled.h3`
   padding-bottom: 20px;
   text-align: center;
   color: #333;
+`;
+
+//과제1 추가
+const SelectAllContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const SelectAllLabel = styled.label`
+  margin-left: 8px;
+  font-size: 0.9rem;
 `;

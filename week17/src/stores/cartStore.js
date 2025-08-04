@@ -74,6 +74,19 @@ const useCartStore = create(
                     );
                 return total * (1 - get().discount);
                 },
+
+            //과제1 추가 (전체 선택/해제 기능)
+            toggleAllChecked: () => {
+                set((state) => {
+                    const allChecked = state.cartItems.every((item) => item.checked);
+                    return {
+                        cartItems: state.cartItems.map((item) => ({
+                            ...item,
+                            checked: !allChecked,
+                        }))
+                    }
+                })
+            }
         }),
         {
             name: 'cart-storage',   // 로컬 스토리지에 cart-storage라는 키로 상태를 저장
