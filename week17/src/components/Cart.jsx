@@ -14,10 +14,19 @@ const Cart = () => {
 	    loading,
 	    getOriginalTotalPrice,
 	    getTotalPrice,
-      toggleAllChecked //과제1 추가
+      toggleAllChecked, //과제1 추가
     } = useCartStore();
 
     const [discountCode, setDiscountCode] = useState('');
+
+    //과제2 추가
+    const { sortOrder, setSortOrder } = useCartStore();
+
+    const sortedItems = [...cartItems].sort((a, b) => {
+      if (sortOrder === 'up') return a.price - b.price;
+      if (sortOrder === 'down') return b.price - a.price;
+      return 0;
+    });
 
     const handleApplyDiscount = (e) => {
         e.preventDefault();
@@ -49,15 +58,26 @@ const Cart = () => {
         <>
           {/* 과제1 추가 */}
           <SelectAllContainer>
-            <input
+            <div>
+              <input
               type="checkbox"
               checked={cartItems.length > 0 && cartItems.every((item) => item.checked)}
               onChange={() => toggleAllChecked()}
             />
-            <SelectAllLabel >전체 선택 / 해제</SelectAllLabel>
+            <SelectAllLabel >전체 선택</SelectAllLabel>
+            </div>
+
+            {/* 과제2 추가 */}
+            <SortItems value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+              <option value="">정렬 옵션</option>
+              <option value="up">가격 낮은 순</option>
+              <option value="down">가격 높은 순</option>
+            </SortItems>
           </SelectAllContainer>
+
+
           <CartList>
-            {cartItems.map((item) => (
+            {sortedItems.map((item) => (
               <CartItem key={item.id}>
                 <input
                   type="checkbox"
@@ -252,6 +272,7 @@ const TotalPrice = styled.h3`
 //과제1 추가
 const SelectAllContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 `;
@@ -260,3 +281,27 @@ const SelectAllLabel = styled.label`
   margin-left: 8px;
   font-size: 0.9rem;
 `;
+
+//과제2 추가
+const SortItems = styled.select`
+  padding: 10px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  appearance: none;
+
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6H0z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+`;
+

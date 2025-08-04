@@ -8,6 +8,7 @@ const useCartStore = create(
             cartItems: [],
             discount: 0,
             loading: false,
+
             // 액션
             // 장바구니에 상품 추가 (이미 있으면 수량 증가)
             addItem: (product) => {
@@ -86,7 +87,11 @@ const useCartStore = create(
                         }))
                     }
                 })
-            }
+            },
+
+            //과제2 추가
+            sortOrder: null,
+            setSortOrder: (order) => set(() => ({ sortOrder: order })),
         }),
         {
             name: 'cart-storage',   // 로컬 스토리지에 cart-storage라는 키로 상태를 저장
