@@ -22,22 +22,39 @@ export const importImage = (name) => {
 const ProductList = () => {
     const addItem = useCartStore ((state) => state.addItem);
 
+    //과제2 추가
+    const { sortOrder, setSortOrder } = useCartStore();
+
+    const sortedProducts = [...products].sort((a, b) => {
+      if (sortOrder === 'up') return a.price - b.price;
+      if (sortOrder === 'down') return b.price - a.price;
+      return 0;
+    });
+
     return (
-    <ProductListContainer>
-      <ProductGrid>
-        {products.map((product, index) => (
-          <ProductItem key={index}>
-            <ProductImage
-              src={importImage(product.name)}
-              alt={product.name}
-            />
-            <ProductName>{product.name}</ProductName>
-            <ProductPrice>{product.price.toLocaleString()}원</ProductPrice>
-            <AddButton onClick={() => addItem(product)}>카트에 추가</AddButton>
-          </ProductItem>
-        ))}
-      </ProductGrid>
-    </ProductListContainer>
+      <ProductListContainer>
+        {/* 과제2 추가 */}
+        <SortBar>
+          <SortItems value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <option value="">정렬 옵션</option>
+            <option value="up">가격 낮은 순</option>
+            <option value="down">가격 높은 순</option>
+          </SortItems>
+        </SortBar>
+        <ProductGrid>
+          {sortedProducts.map((product, index) => (
+            <ProductItem key={index}>
+              <ProductImage
+                src={importImage(product.name)}
+                alt={product.name}
+              />
+              <ProductName>{product.name}</ProductName>
+              <ProductPrice>{product.price.toLocaleString()}원</ProductPrice>
+              <AddButton onClick={() => addItem(product)}>카트에 추가</AddButton>
+            </ProductItem>
+          ))}
+        </ProductGrid>
+      </ProductListContainer>
   );
 }
 
@@ -50,8 +67,8 @@ const ProductListContainer = styled.div`
   box-sizing: border-box;
   height: 100%;
   min-width: 0;
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
 `;
 
 const ProductGrid = styled.ul`
@@ -130,5 +147,33 @@ const AddButton = styled.button`
 
   &:hover {
     background-color: #218838;
+  }
+`;
+
+//과제2 추가
+const SortBar = styled.div`
+  margin-bottom: 10px;
+  text-align: left;
+`;
+
+const SortItems = styled.select`
+  padding: 10px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  appearance: none;
+
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6H0z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding-right: 30px;
+
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
   }
 `;
