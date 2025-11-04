@@ -2,13 +2,27 @@ import { useState } from 'react';
 import { useMovieSearch } from './hooks/useMovieSearch';
 import MovieCard from './components/MovieCard';
 import styled from 'styled-components';
+import { useMovieDetail } from './hooks/useMovieDetail';
+import MovieModal from './components/MovieModal';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { movies, status, error } = useMovieSearch(searchQuery);
 
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const { movie, loading: detailLoading, error: detailError } = useMovieDetail(selectedId);
+
   const handleMovieSelect = (id: number): void => {
-    console.log('선택한 영화 ID:', id);
+    //console.log('선택한 영화 ID:', id);
+    setSelectedId(id);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedId(null);
   };
 
   // 이벤트 핸들러 - Typescript 타입 자동 추론:
@@ -86,6 +100,12 @@ function App() {
         )}
 
       </Content>
+
+      <MovieModal
+        movie={!detailLoading && !detailError ? movie : null}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </Homepage>
   );
 }
