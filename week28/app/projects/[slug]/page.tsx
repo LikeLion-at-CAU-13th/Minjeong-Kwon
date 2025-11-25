@@ -1,6 +1,7 @@
+import BackButton from "@/components/BackButton"
 import { projects } from "@/constant/projects"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { FiArrowLeftCircle } from "react-icons/fi"
 
 interface PageProps {
@@ -17,20 +18,16 @@ export default async function ProjectDetailPage({params} : PageProps){
     const resolvedParams = await Promise.resolve(params)
     const project = projects.find((p) => p.slug === resolvedParams.slug)
 
-    if (!project) redirect("/projects"); //없는 페이지일 경우 프로젝트 페이지로 (notFound()로 하면 404 에러 페이지 생김)
-
+    // if (!project) redirect("/projects"); //없는 페이지일 경우 프로젝트 페이지로 (notFound()로 하면 404 에러 페이지 생김)
+    if (!project) {
+      notFound();
+    }
 
   return (
     <div className="min-h-screen pt-[12vh]">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* 뒤로가기 버튼 */}
-        <Link
-          href="/projects"
-          className="inline-flex items-center text-gray-500 hover:text-gray-900 mb-8 transition-colors gap-x-2"
-        >
- 
-          <FiArrowLeftCircle />프로젝트 목록으로
-        </Link>
+
+        <BackButton />
 
         {/* 프로젝트 헤더 */}
         <div className="mb-8">

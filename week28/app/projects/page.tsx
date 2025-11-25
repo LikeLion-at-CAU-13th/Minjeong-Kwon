@@ -1,8 +1,13 @@
+"use client";
+
 import React from 'react'
 import { projects } from '@/constant/projects'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 
 export default function ProjectPage(){
+  const router = useRouter();
+
   return (
     <div className="min-h-screen pt-[12vh]">
       <div className="container mx-auto px-4 py-8">
@@ -11,14 +16,11 @@ export default function ProjectPage(){
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <Link
+            <div
               key={project.id}
-              href={`/projects/${project.slug}`}
+              onClick={() => router.push(`/projects/${project.slug}`)}
+              className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300 bg-white cursor-pointer"
             >
-              <div 
-                key={project.id}
-                className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300 bg-white cursor-pointer"
-              >
                 <h2 className="text-xl font-semibold mb-3">{project.title}</h2>
                 <p className="text-gray-600 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -35,7 +37,6 @@ export default function ProjectPage(){
                   자세히 보기 &gt;
                 </div>
               </div>
-              </Link>
           ))}
         </div>
       </div>
